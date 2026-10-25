@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Redirection...</title>
+<script>
+(function(){
+  var p=location.pathname, l=p.toLowerCase();
+  if(p!==l && /\.html$/.test(l)){ location.replace(l+location.search+location.hash); }
+})();
+</script></head>
+<body style="font-family:sans-serif;text-align:center;padding:40px">
+<h2>Page introuvable / الصفحة غير موجودة</h2>
+<p>Vérifiez le lien (ex. unite01_lien01.html).</p>
+</body></html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unité 2 – Les pronoms possessifs</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@600;700;800&display=swap');
+  :root { --cream:#FFF8EA; --ink:#2E2A26; --gold:#E7B23E; --suis:#8E6FD1; --ai:#EE8A52; --teal:#3EBFAF; --pink:#E15A72; --card-shadow:rgba(46,42,38,0.18); }
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; height:100%; font-family:'Nunito',sans-serif; background:var(--cream); color:var(--ink); overflow:hidden; }
+  #stage { position:relative; width:100%; height:100vh; max-height:720px; margin:0 auto; display:flex; align-items:center; justify-content:center; }
+  .theme-band { position:absolute; inset:0; z-index:-1; transition: background 0.5s ease; }
+  .scene { position:absolute; inset:0; display:none; flex-direction:column; align-items:center; justify-content:safe center; padding:30px 24px 90px; text-align:center; opacity:0; transform:translateY(14px); transition:opacity .45s ease, transform .45s ease; overflow-y:auto; }
+  .scene.active { display:flex; opacity:1; transform:translateY(0); }
+  .char-photo { width: clamp(130px, 30vw, 190px); max-height:34vh; border-radius:20px; box-shadow:0 10px 0 var(--card-shadow), 0 10px 24px rgba(0,0,0,0.18); margin-bottom:10px; background:white; padding:6px; object-fit:cover; }
+  .struct-badge { display:inline-flex; align-items:center; gap:8px; border-radius:999px; padding:6px 18px; font-family:'Baloo 2',sans-serif; font-weight:800; font-size:14px; color:white; margin-bottom:10px; letter-spacing:0.3px; background:var(--suis); }
+  .struct-badge.ai { background: var(--ai); } .struct-badge.teal { background: var(--teal); } .struct-badge.pink { background: var(--pink); }
+  h1.sense-title { font-family:'Baloo 2',sans-serif; font-weight:800; font-size:clamp(24px,6vw,40px); margin:6px 0 2px; }
+  p.sentence { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:clamp(18px,4.6vw,26px); margin:8px 0; max-width:640px; }
+  .question-box { margin-top:12px; background:rgba(255,255,255,.85); border-radius:20px; padding:12px 20px; max-width:560px; font-size:clamp(15px,3.4vw,19px); }
+  .question-box .q { font-weight:700; }
+  .question-box .a { margin-top:6px; opacity:0; max-height:0; overflow:hidden; transition:opacity .4s ease; }
+  .question-box .a.shown { opacity:1; max-height:120px; }
+  .speak-btn, .reveal-btn { margin-top:12px; margin-right:8px; border:none; border-radius:999px; padding:9px 18px; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:14px; cursor:pointer; background:var(--ink); color:white; box-shadow:0 4px 0 rgba(0,0,0,.25); }
+  .speak-btn:active, .reveal-btn:active { transform:translateY(3px); box-shadow:none; }
+  .intro-row { display:flex; gap:16px; align-items:flex-end; margin:6px 0 10px; }
+  .intro-row img { width: clamp(90px,20vw,120px); max-height:24vh; object-fit:cover; border-radius:16px; box-shadow:0 6px 0 var(--card-shadow); background:white; padding:4px; }
+  .bubble { background:white; border-radius:16px; padding:10px 16px; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:clamp(14px,3.2vw,18px); box-shadow:0 5px 0 var(--card-shadow); max-width:560px; }
+  .recap-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; width:100%; max-width:560px; }
+  .recap-item { background:white; border-radius:14px; padding:6px; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:clamp(10px,2.3vw,12px); box-shadow:0 5px 0 var(--card-shadow); opacity:0; transform:scale(.85); transition:opacity .35s ease, transform .35s ease; display:flex; flex-direction:column; justify-content:center; }
+  .recap-item.shown { opacity:1; transform:scale(1); }
+  .recap-item img { width:100%; height:70px; object-fit:cover; border-radius:8px; margin-bottom:4px; }
+  .recap-item .em { font-size:26px; margin-bottom:2px; }
+  .quiz-options { display:flex; flex-direction:column; gap:12px; width:100%; max-width:420px; margin-top:14px; }
+  .quiz-opt { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:16px; background:white; border:3px solid transparent; border-radius:16px; padding:11px 18px; cursor:pointer; box-shadow:0 5px 0 var(--card-shadow); transition:transform .15s ease; }
+  .quiz-opt:hover { transform:translateY(-2px); }
+  .quiz-opt.correct { background:#DFF3DA; border-color:#5BAE5B; }
+  .quiz-opt.wrong { background:#FBDDE1; border-color:var(--pink); }
+  .quiz-feedback { margin-top:12px; font-family:'Baloo 2',sans-serif; font-weight:800; font-size:19px; min-height:28px; }
+  .quiz-photo { width: clamp(110px,26vw,150px); max-height:22vh; object-fit:cover; border-radius:16px; box-shadow:0 8px 0 var(--card-shadow); margin-bottom:8px; background:white; padding:5px; }
+  .dialogue-line { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:clamp(14px,3.2vw,17px); background:white; border-radius:16px; padding:8px 16px; margin:4px 0; box-shadow:0 5px 0 var(--card-shadow); max-width:520px; text-align:left; cursor:pointer; }
+  .dialogue-line .who { color:var(--suis); font-weight:800; margin-right:6px; }
+  .dialogue-line .who.b { color:var(--ai); }
+  .dialogue-line.c { text-align:center; }
+  .dialogue-line em { color:var(--pink); font-style:normal; }
+  #nav { position:absolute; bottom:16px; left:0; right:0; display:flex; align-items:center; justify-content:center; gap:16px; z-index:5; }
+  .nav-btn { background:white; border:none; border-radius:999px; width:44px; height:44px; font-size:19px; cursor:pointer; box-shadow:0 4px 0 var(--card-shadow); }
+  .nav-btn:disabled { opacity:.35; cursor:default; }
+  #dots { display:flex; gap:6px; flex-wrap:wrap; max-width:260px; justify-content:center; }
+  .dot { width:8px; height:8px; border-radius:50%; background:rgba(0,0,0,.18); transition:background .3s ease; }
+  .dot.on { background:var(--ink); }
+</style>
+</head>
+<body>
+<div id="stage"><div class="theme-band" id="themeBand"></div></div>
+<div id="nav"><button class="nav-btn" id="prevBtn" onclick="go(-1)">◀</button><div id="dots"></div><button class="nav-btn" id="nextBtn" onclick="go(1)">▶</button></div>
+<script>
+const IMG = {};
+const quiz = [{"title": "Voilà ma sœur. → Voilà …", "options": ["les miennes", "la mienne", "le mien"], "correct": 1}, {"title": "Il a apporté ses livres. → Il a apporté …", "options": ["la sienne", "les siens", "le sien"], "correct": 1}, {"title": "Mon mari a 38 ans. → … a 44 ans.", "options": ["La mienne", "Les miens", "Le mien"], "correct": 2}, {"title": "Notre chat → …", "options": ["la nôtre", "le nôtre", "le notre"], "correct": 1}, {"title": "Vos leçons → …", "options": ["le vôtre", "les vôtres", "les votres"], "correct": 1}];
+const SCENES = ["<div class=\"scene\" data-color=\"var(--gold)\"><div class=\"intro-row\"><\/div><div class=\"bubble\">Voilà ma sœur. → Voilà la mienne.<\/div><h1 class=\"sense-title\" style=\"margin-top:12px;\">Les pronoms possessifs<\/h1><p class=\"sentence\">Le pronom possessif remplace un nom précédé d&#x27;un adjectif possessif.<\/p><button class=\"speak-btn\" onclick=\"speak(&quot;Les pronoms possessifs. Voilà ma sœur. Voilà la mienne.&quot;)\">🔊 Écouter<\/button><\/div>", "<div class=\"scene\" data-color=\"var(--suis)\"><h1 class=\"sense-title\" style=\"font-size:24px;\">Définition<\/h1><div class=\"dialogue-line c\" onclick=\"speak(&quot;Le pronom possessif sert à remplacer un nom précédé d&#x27;un adjectif possessif (mon, ton, son…).&quot;)\">Le pronom possessif sert à remplacer un nom précédé d'un adjectif possessif (mon, ton, son…).<\/div><div class=\"dialogue-line c\" onclick=\"speak(&quot;Il varie selon le genre et le nombre du nom qu&#x27;il remplace.&quot;)\">Il varie selon <em>le genre<\/em> et <em>le nombre<\/em> du nom qu'il remplace.<\/div><button class=\"speak-btn\" onclick=\"speak(&quot;Le pronom possessif sert à remplacer un nom précédé d&#x27;un adjectif possessif (mon, ton, son…). Il varie selon le genre et le nombre du nom qu&#x27;il remplace.&quot;)\">🔊 Écouter<\/button><\/div>", "<div class=\"scene\" data-color=\"var(--ai)\"><h1 class=\"sense-title\" style=\"font-size:24px;\">Exemples<\/h1><div class=\"dialogue-line c\" onclick=\"speak(&quot;① Voilà ma sœur. → Voilà la mienne. (féminin singulier)&quot;)\">① Voilà ma sœur. → Voilà <em>la mienne<\/em>. (féminin singulier)<\/div><div class=\"dialogue-line c\" onclick=\"speak(&quot;② Il a apporté ses livres. → Il a apporté les siens. (masculin pluriel)&quot;)\">② Il a apporté ses livres. → Il a apporté <em>les siens<\/em>. (masculin pluriel)<\/div><div class=\"dialogue-line c\" onclick=\"speak(&quot;③ Mon mari a 38 ans. → Le mien a 44 ans. (masculin singulier)&quot;)\">③ Mon mari a 38 ans. → <em>Le mien<\/em> a 44 ans. (masculin singulier)<\/div><button class=\"speak-btn\" onclick=\"speak(&quot;① Voilà ma sœur. → Voilà la mienne. (féminin singulier) ② Il a apporté ses livres. → Il a apporté les siens. (masculin pluriel) ③ Mon mari a 38 ans. → Le mien a 44 ans. (masculin singulier)&quot;)\">🔊 Écouter<\/button><\/div>", "<div class=\"scene\" data-color=\"var(--teal)\"><h1 class=\"sense-title\" style=\"font-size:24px;\">Masculin<\/h1><div class=\"dialogue-line c\" onclick=\"speak(&quot;le mien · le tien · le sien · le nôtre · le vôtre · le leur&quot;)\">le mien · le tien · le sien · le nôtre · le vôtre · le leur<\/div><div class=\"dialogue-line c\" onclick=\"speak(&quot;les miens · les tiens · les siens · les nôtres · les vôtres · les leurs&quot;)\">les miens · les tiens · les siens · les nôtres · les vôtres · les leurs<\/div><button class=\"speak-btn\" onclick=\"speak(&quot;le mien · le tien · le sien · le nôtre · le vôtre · le leur les miens · les tiens · les siens · les nôtres · les vôtres · les leurs&quot;)\">🔊 Écouter<\/button><\/div>", "<div class=\"scene\" data-color=\"var(--pink)\"><h1 class=\"sense-title\" style=\"font-size:24px;\">Féminin<\/h1><div class=\"dialogue-line c\" onclick=\"speak(&quot;la mienne · la tienne · la sienne · la nôtre · la vôtre · la leur&quot;)\">la mienne · la tienne · la sienne · la nôtre · la vôtre · la leur<\/div><div class=\"dialogue-line c\" onclick=\"speak(&quot;les miennes · les tiennes · les siennes · les nôtres · les vôtres · les leurs&quot;)\">les miennes · les tiennes · les siennes · les nôtres · les vôtres · les leurs<\/div><button class=\"speak-btn\" onclick=\"speak(&quot;la mienne · la tienne · la sienne · la nôtre · la vôtre · la leur les miennes · les tiennes · les siennes · les nôtres · les vôtres · les leurs&quot;)\">🔊 Écouter<\/button><\/div>", "<div class=\"scene\" data-color=\"var(--suis)\"><h1 class=\"sense-title\" style=\"font-size:24px;\">Attention !<\/h1><div class=\"dialogue-line c\" onclick=\"speak(&quot;« nôtre » et « vôtre » prennent un accent circonflexe sur le o : « ô ».&quot;)\">« nôtre » et « vôtre » prennent un accent circonflexe sur le o : « ô ».<\/div><button class=\"speak-btn\" onclick=\"speak(&quot;« nôtre » et « vôtre » prennent un accent circonflexe sur le o : « ô ».&quot;)\">🔊 Écouter<\/button><\/div>", "<div class=\"scene\" data-color=\"var(--suis)\"><h1 class=\"sense-title\">Exercice 1<\/h1><div class=\"question-box\"><div class=\"q\" style=\"cursor:pointer\" onclick=\"speak(&quot;Mes frères jouent dans le parc. Mais où sont passés … (tes frères) ?&quot;)\">Mes frères jouent dans le parc. Mais où sont passés … (tes frères) ?<\/div><div class=\"a\" id=\"ans-13\" onclick=\"speak(&quot;les tiens&quot;)\">les tiens<\/div><\/div><button class=\"reveal-btn\" onclick=\"revealAnswer('ans-13',this)\">Voir la réponse<\/button><button class=\"speak-btn\" onclick=\"speak(&quot;Mes frères jouent dans le parc. Mais où sont passés … (tes frères) ? les tiens&quot;)\">🔊 Écouter<\/button><\/div>", "<div class=\"scene\" data-color=\"var(--ai)\"><h1 class=\"sense-title\">Exercice 2<\/h1><div class=\"question-box\"><div class=\"q\" style=\"cursor:pointer\" onclick=\"speak(&quot;Peux-tu me passer ta gomme ? J&#x27;ai perdu … (ma gomme).&quot;)\">Peux-tu me passer ta gomme ? J&#x27;ai perdu … (ma gomme).<\/div><div class=\"a\" id=\"ans-14\" onclick=\"speak(&quot;la mienne&quot;)\">la mienne<\/div><\/div><button class=\"reveal-btn\" onclick=\"revealAnswer('ans-14',this)\">Voir la réponse<\/button><button class=\"speak-btn\" onclick=\"speak(&quot;Peux-tu me passer ta gomme ? J&#x27;ai perdu … (ma gomme). la mienne&quot;)\">🔊 Écouter<\/button><\/div>", "<div class=\"scene\" data-color=\"var(--teal)\"><h1 class=\"sense-title\">Exercice 3<\/h1><div class=\"question-box\"><div class=\"q\" style=\"cursor:pointer\" onclick=\"speak(&quot;J&#x27;ai lavé ma voiture et Lucie a lavé … (sa voiture).&quot;)\">J&#x27;ai lavé ma voiture et Lucie a lavé … (sa voiture).<\/div><div class=\"a\" id=\"ans-15\" onclick=\"speak(&quot;la sienne&quot;)\">la sienne<\/div><\/div><button class=\"reveal-btn\" onclick=\"revealAnswer('ans-15',this)\">Voir la réponse<\/button><button class=\"speak-btn\" onclick=\"speak(&quot;J&#x27;ai lavé ma voiture et Lucie a lavé … (sa voiture). la sienne&quot;)\">🔊 Écouter<\/button><\/div>", "<div class=\"scene\" data-color=\"var(--suis)\"><h1 class=\"sense-title\">Exercice 4<\/h1><div class=\"question-box\"><div class=\"q\" style=\"cursor:pointer\" onclick=\"speak(&quot;Nous avons revu nos leçons. Avez-vous revu … (vos leçons) ?&quot;)\">Nous avons revu nos leçons. Avez-vous revu … (vos leçons) ?<\/div><div class=\"a\" id=\"ans-16\" onclick=\"speak(&quot;les vôtres&quot;)\">les vôtres<\/div><\/div><button class=\"reveal-btn\" onclick=\"revealAnswer('ans-16',this)\">Voir la réponse<\/button><button class=\"speak-btn\" onclick=\"speak(&quot;Nous avons revu nos leçons. Avez-vous revu … (vos leçons) ? les vôtres&quot;)\">🔊 Écouter<\/button><\/div>", "<div class=\"scene\" data-color=\"var(--ai)\"><h1 class=\"sense-title\">Exercice 5<\/h1><div class=\"question-box\"><div class=\"q\" style=\"cursor:pointer\" onclick=\"speak(&quot;Le vétérinaire examine votre chat, puis examinera … (notre chat).&quot;)\">Le vétérinaire examine votre chat, puis examinera … (notre chat).<\/div><div class=\"a\" id=\"ans-17\" onclick=\"speak(&quot;le nôtre&quot;)\">le nôtre<\/div><\/div><button class=\"reveal-btn\" onclick=\"revealAnswer('ans-17',this)\">Voir la réponse<\/button><button class=\"speak-btn\" onclick=\"speak(&quot;Le vétérinaire examine votre chat, puis examinera … (notre chat). le nôtre&quot;)\">🔊 Écouter<\/button><\/div>", "<div class=\"scene\" data-color=\"var(--teal)\"><h1 class=\"sense-title\">Exercice 6<\/h1><div class=\"question-box\"><div class=\"q\" style=\"cursor:pointer\" onclick=\"speak(&quot;Tes enfants sont très sages mais pas … (leurs enfants).&quot;)\">Tes enfants sont très sages mais pas … (leurs enfants).<\/div><div class=\"a\" id=\"ans-18\" onclick=\"speak(&quot;les leurs&quot;)\">les leurs<\/div><\/div><button class=\"reveal-btn\" onclick=\"revealAnswer('ans-18',this)\">Voir la réponse<\/button><button class=\"speak-btn\" onclick=\"speak(&quot;Tes enfants sont très sages mais pas … (leurs enfants). les leurs&quot;)\">🔊 Écouter<\/button><\/div>", "<div class=\"scene\" data-color=\"var(--teal)\"><h1 class=\"sense-title\" style=\"font-size:24px;\">🎮 Devine !<\/h1><img class=\"quiz-photo\" id=\"quizPhoto\" src=\"\" alt=\"\" style=\"display:none\"><p class=\"sentence\" id=\"quizTitle\" style=\"font-size:clamp(17px,4vw,22px);cursor:pointer\" onclick=\"speak(this.textContent)\"><\/p><div class=\"quiz-options\" id=\"quizOptions\"><\/div><div class=\"quiz-feedback\" id=\"quizFeedback\"><\/div><\/div>", "<div class=\"scene\" data-color=\"var(--gold)\"><h1 class=\"sense-title\">On révise ! 🧠<\/h1><div class=\"recap-grid\" id=\"recapGrid\"><div class=\"recap-item\" style=\"cursor:pointer\" onclick=\"speak(&quot;ma sœur → la mienne&quot;)\"><div class=\"em\">👧<\/div>ma sœur → la mienne<\/div><div class=\"recap-item\" style=\"cursor:pointer\" onclick=\"speak(&quot;ses livres → les siens&quot;)\"><div class=\"em\">📚<\/div>ses livres → les siens<\/div><div class=\"recap-item\" style=\"cursor:pointer\" onclick=\"speak(&quot;mon mari → le mien&quot;)\"><div class=\"em\">👨<\/div>mon mari → le mien<\/div><div class=\"recap-item\" style=\"cursor:pointer\" onclick=\"speak(&quot;notre chat → le nôtre&quot;)\"><div class=\"em\">🐱<\/div>notre chat → le nôtre<\/div><div class=\"recap-item\" style=\"cursor:pointer\" onclick=\"speak(&quot;vos leçons → les vôtres&quot;)\"><div class=\"em\">📖<\/div>vos leçons → les vôtres<\/div><div class=\"recap-item\" style=\"cursor:pointer\" onclick=\"speak(&quot;leurs enfants → les leurs&quot;)\"><div class=\"em\">👶<\/div>leurs enfants → les leurs<\/div><\/div><\/div>", "<div class=\"scene\" data-color=\"var(--pink)\"><div class=\"dialogue-line c\" onclick=\"speak(&quot;Voilà ma sœur. Voilà la mienne.&quot;)\">« Voilà ma sœur. Voilà la mienne. »<\/div><h1 class=\"sense-title\" style=\"margin-top:12px;\">🌟 Bravo !<\/h1><p class=\"sentence\">Bravo ! Maintenant, tu connais les pronoms possessifs ! 🎉<\/p><button class=\"speak-btn\" onclick=\"speak(&quot;Bravo ! Maintenant, tu connais les pronoms possessifs !&quot;)\">🔊 Écouter<\/button><\/div>"];
+
+const stage=document.getElementById('stage');
+stage.insertAdjacentHTML('beforeend', SCENES.join(''));
+document.querySelectorAll('[data-img]').forEach(e=>{e.src=IMG[e.dataset.img];});
+const scenes=document.querySelectorAll('.scene');
+const dotsContainer=document.getElementById('dots');
+const themeBand=document.getElementById('themeBand');
+let current=0;
+const quizSceneIndex=scenes.length-3;
+scenes.forEach((s,i)=>{const d=document.createElement('div');d.className='dot'+(i===0?' on':'');dotsContainer.appendChild(d);});
+function updateTheme(){const color=scenes[current].dataset.color;themeBand.style.background=`radial-gradient(circle at 50% 20%, ${color}33, transparent 60%), var(--cream)`;}
+function render(){
+  scenes.forEach((s,i)=>s.classList.toggle('active',i===current));
+  [...dotsContainer.children].forEach((d,i)=>d.classList.toggle('on',i===current));
+  document.getElementById('prevBtn').disabled=current===0;
+  document.getElementById('nextBtn').disabled=current===scenes.length-1;
+  updateTheme();
+  if(current===scenes.length-2)animateRecap();
+  if(current===quizSceneIndex)startQuiz();
+}
+function go(delta){const next=current+delta;if(next<0||next>=scenes.length)return;current=next;render();}
+function speak(text){
+  if(!('speechSynthesis' in window))return;
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);u.lang='fr-FR';u.rate=0.85;
+  const vs=window.speechSynthesis.getVoices();
+  const v=vs.find(x=>x.lang==='fr-FR')||vs.find(x=>(x.lang||'').toLowerCase().startsWith('fr'));
+  if(v)u.voice=v;
+  window.speechSynthesis.speak(u);
+}
+function revealAnswer(id,btn){const a=document.getElementById(id);a.classList.add('shown');btn.style.display='none';speak(a.textContent);}
+if('speechSynthesis' in window){window.speechSynthesis.getVoices();window.speechSynthesis.onvoiceschanged=()=>{};}
+function animateRecap(){
+  document.querySelectorAll('#recapGrid .recap-item').forEach((it,i)=>{it.classList.remove('shown');setTimeout(()=>it.classList.add('shown'),80+i*100);});
+}
+let quizIndex=0;
+function startQuiz(){quizIndex=0;renderQuizQuestion();}
+function renderQuizQuestion(){
+  const feedback=document.getElementById('quizFeedback');feedback.textContent='';
+  const qp=document.getElementById('quizPhoto');
+  if(quizIndex>=quiz.length){
+    qp.style.display='none';
+    document.getElementById('quizTitle').textContent='🎉 Bravo, tu as fini le jeu !';
+    document.getElementById('quizOptions').innerHTML='';return;
+  }
+  const q=quiz[quizIndex];
+  if(q.img){qp.style.display='block';qp.src=IMG[q.img];}else{qp.style.display='none';}
+  document.getElementById('quizTitle').textContent=q.title;
+  const optsDiv=document.getElementById('quizOptions');optsDiv.innerHTML='';
+  q.options.forEach((opt,i)=>{const btn=document.createElement('button');btn.className='quiz-opt';btn.textContent=opt;btn.onclick=()=>answerQuiz(i,btn);optsDiv.appendChild(btn);});
+}
+function answerQuiz(i,btnEl){
+  const q=quiz[quizIndex];
+  const buttons=document.querySelectorAll('.quiz-opt');
+  buttons.forEach(b=>b.onclick=null);
+  if(i===q.correct){btnEl.classList.add('correct');document.getElementById('quizFeedback').textContent='✅ Bravo !';speak(q.options[i]+' ! Bravo !');}
+  else{btnEl.classList.add('wrong');buttons[q.correct].classList.add('correct');document.getElementById('quizFeedback').textContent='❌ Pas tout à fait...';speak('La bonne réponse : '+q.options[q.correct]);}
+  setTimeout(()=>{quizIndex++;renderQuizQuestion();},2600);
+}
+render();
+
+</script>
+</body>
+</html>
